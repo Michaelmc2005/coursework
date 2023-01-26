@@ -1,0 +1,3 @@
+Booking Validations - used text updated instead of text changed for combo boxes- dumb
+
+Displaying correct checkboxes on edit - Wrong getservicebookings from reader number (1) should have been (2)

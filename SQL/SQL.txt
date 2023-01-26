@@ -1,0 +1,69 @@
+   create table customers(
+  customerID int not null,
+  firstName nvarchar(50) not null,
+  secondName nvarchar(50)not  null,
+  DOB date not null,
+  addressLine1 nvarchar(50) not null,
+  addressLine2 nvarchar(50) null,
+  town nvarchar(50) not null,
+  postCode nvarchar(50) not null,
+  emailAddress nvarchar(50) not null, 
+  contactNumber nvarchar(50) not null,
+  deleted bit not null,
+  CONSTRAINT customersPK PRIMARY KEY (customerID));
+
+
+  create table staff(
+  staffID int,
+  firstName nvarchar(50) not null,
+  secondName nvarchar(50) not null,
+  contactNumber nvarchar(50) not null,
+  addressLine1 nvarchar(50) not  null,
+  DOB date not null,
+  deleted bit not null,
+  Level nvarchar(50) not null,
+  CONSTRAINT staffPK PRIMARY KEY (staffID));
+
+   create table service (
+  serviceID int not null,
+  serviceName nvarchar(50) not null,
+  servicePrice decimal not null,
+  duration time not null,
+  CONSTRAINT servicePK PRIMARY KEY (serviceID));
+
+create table appointments (
+  appointmentID int not null,
+  serviceFK int REFERENCES service(serviceID),
+  staffFK int REFERENCES staff(staffID),
+  CONSTRAINT appointmentPK PRIMARY KEY (appointmentID));
+
+  create table booking (
+  bookingID int not null,
+  customerFK int REFERENCES customers(customerID),
+  staffFK int REFERENCES staff(staffID),
+  startTime nvarchar not null,
+  finishTime nvarchar not null,
+  startDate nvarchar not null,
+  completed bit not null,
+  price int not null,
+  CONSTRAINT bookingPK PRIMARY KEY (BookingID));
+
+Create table ServiceBooking
+(ServiceBookingID int PRIMARY KEY Not null, BookingID int FOREIGN KEY REFERENCES booking(BookingID),ServiceID int FOREIGN KEY REFERENCES service(ServiceID))
+
+=================================================================================
+
+
+INSERT INTO customers (customerID,firstName,secondName,DOB,addressLine1,contactNumber,deleted) 
+VALUES (1, 'Taylor', 'Mateer', '2004-10-16','14 lewis mews', '077859', 0)
+
+INSERT INTO service(serviceID,serviceName,servicePrice,duration) VALUES (1,'Haircut',25.00,'00:30:00')
+
+INSERT INTO staff(staffID,firstName,secondName,DOB,addressLine1,contactNumber,deleted,accessLevel)
+ VALUES (1,'mohammed','ahmed','2004-09-16','lagan','16000000000',0, 'Full-Time'), (2,'Taylor','Mateer','2004-09-16','lagan','07700900255',0, 'Part-Time'),
+(3,'Harry','Cameron','2004-09-16','lagan','07700900255',0,'Part-Time'),
+(4,'Louis','Shanks-Milar','2004-09-16','lagan','07700900255',0, 'Full-Time');
+
+INSERT INTO appointments(appointmentID,serviceFK,staffFK) VALUES (1,1,1)
+
+INSERT INTO booking(bookingID,customerFK,appointmentFK,startTime,roomNumber,completed) VALUES (1,1,1,'13:30:00',1,0)
